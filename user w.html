@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game X - Unleash the Gamer Within</title>
+    <style>
+        :root {
+            --primary-color: #ff4500;
+            --secondary-color: #00ffff;
+            --dark-bg: #0d0f1a;
+            --light-bg: #1a1c2d;
+            --card-bg: #252840;
+            --text-color: #e0e0e0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        h1, h2 { color: var(--primary-color); }
+
+        /* Header & Navigation */
+        .main-header {
+            background-color: rgba(13, 15, 26, 0.85);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+            backdrop-filter: blur(10px);
+        }
+        .main-nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 2rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+        
+        .nav-links { list-style: none; display: flex; gap: 25px; }
+        .nav-links a { color: var(--text-color); text-decoration: none; font-size: 1.1rem; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--secondary-color); }
+
+        .hamburger { display: none; cursor: pointer; }
+        .hamburger .line { display: block; width: 25px; height: 3px; background-color: var(--text-color); margin: 5px 0; transition: 0.3s; }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh; position: relative; display: flex;
+            justify-content: center; align-items: center; text-align: center;
+            color: white; overflow: hidden;
+        }
+        #hero-slideshow { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background-color: var(--dark-bg); }
+        .hero-slide {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(13, 15, 26, 0.6); z-index: 2; }
+        .hero-content { position: relative; z-index: 3; }
+        .hero-content h1 { font-size: 4rem; text-shadow: 0 0 20px rgba(0,0,0,0.7); }
+        .hero-content p { font-size: 1.3rem; }
+
+        /* Sections */
+        .section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; }
+        #about-content { text-align: center; font-size: 1.1rem; max-width: 800px; margin: 0 auto; }
+        #about-phone { margin-top: 20px; font-size: 1.2rem; font-weight: bold; }
+        #about-phone a { color: var(--secondary-color); text-decoration: none; }
+        #community { background-color: var(--light-bg); }
+        #community-partners { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; }
+        .partner-card { background-color: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .partner-card:hover { transform: translateY(-10px); box-shadow: 0 0 20px var(--secondary-color); }
+        .partner-card img { max-width: 100%; height: 100px; object-fit: contain; margin-bottom: 15px; }
+        .partner-card h3 { color: var(--text-color); font-size: 1.1rem; }
+        .main-footer { background-color: #000; text-align: center; padding: 40px 0; border-top: 2px solid var(--primary-color); }
+
+        /* Responsive Design: Media Queries */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px; /* Height of header */
+                gap: 0;
+                flex-direction: column;
+                background-color: var(--dark-bg);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { padding: 1rem 0; }
+            .hamburger { display: block; }
+            .hamburger.active .line:nth-child(2) { opacity: 0; }
+            .hamburger.active .line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .section { padding: 60px 0; }
+            .section-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-nav container">
+            <a href="#hero" class="logo">Game X</a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#community">Community</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <div id="hero-slideshow"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content container">
+                <h1>Welcome to Game X</h1>
+                <p>Your hub for the latest in the gaming world.</p>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container"><h2 class="section-title">About Us</h2><div id="about-content"><p id="about-text">Loading...</p><div id="about-phone"></div></div></div>
+        </section>
+
+        <section id="community" class="section">
+            <div class="container"><h2 class="section-title">Our Partners</h2><div id="community-partners"><p>Loading...</p></div></div>
+        </section>
+    </main>
+
+    <footer class="main-footer"><p class="container">&copy; 2025 Game X. All Rights Reserved.</p></footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCh81ZeOU6hmqAkAiTSeMgH1o7AnZCdWLQ",
+            authDomain: "game-x-website.firebaseapp.com",
+            projectId: "game-x-website",
+            storageBucket: "game-x-website.appspot.com",
+            messagingSenderId: "10948108212",
+            appId: "1:10948108212:web:d68e4a25e0d8836ad35ce1"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Mobile Navigation (Hamburger Menu)
+        const hamburger = document.querySelector(".hamburger");
+        const navLinks = document.querySelector(".nav-links");
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+        document.querySelectorAll(".nav-links li").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navLinks.classList.remove("active");
+        }));
+
+        // Hero Slideshow Logic
+        const slideshowContainer = document.getElementById('hero-slideshow');
+        let slideInterval;
+        onSnapshot(collection(db, "heroImages"), (snapshot) => {
+            slideshowContainer.innerHTML = '';
+            const slides = snapshot.docs.map(doc => doc.data());
+            if (slides.length > 0) {
+                slides.forEach(slide => {
+                    const slideEl = document.createElement('div');
+                    slideEl.className = 'hero-slide';
+                    slideEl.style.backgroundImage = `url('${slide.imageUrl}')`;
+                    slideshowContainer.appendChild(slideEl);
+                });
+            } else {
+                slideshowContainer.innerHTML = `<div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1555864472-39823b3b435b?q=80&w=1974&auto=format&fit=crop');"></div>`;
+            }
+            startSlideshow();
+        });
+        
+        function startSlideshow() {
+            if (slideInterval) clearInterval(slideInterval);
+            const slideElements = document.querySelectorAll('.hero-slide');
+            if (!slideElements.length) return;
+            let currentIndex = 0;
+            slideElements[0].classList.add('active');
+            if (slideElements.length > 1) {
+                slideInterval = setInterval(() => {
+                    slideElements[currentIndex].classList.remove('active');
+                    currentIndex = (currentIndex + 1) % slideElements.length;
+                    slideElements[currentIndex].classList.add('active');
+                }, 5000);
+            }
+        }
+        
+        // About Us & Partners Logic
+        onSnapshot(doc(db, "siteContent", "aboutUs"), (docSnap) => {
+            const elText = document.getElementById('about-text'), elPhone = document.getElementById('about-phone');
+            if(docSnap.exists()){
+                const data = docSnap.data();
+                elText.textContent = data.content || 'Content coming soon.';
+                elPhone.innerHTML = data.phone ? `Contact Us: <a href="tel:${data.phone}">${data.phone}</a>` : '';
+            } else { elText.textContent = 'Content not available.'; }
+        });
+
+        onSnapshot(collection(db, "partners"), (snapshot) => {
+            const container = document.getElementById('community-partners');
+            container.innerHTML = '';
+            if (snapshot.empty) {
+                container.innerHTML = '<p>Partners will be listed here soon.</p>';
+            } else {
+                snapshot.forEach(doc => {
+                    const partner = doc.data();
+                    const card = document.createElement('div');
+                    card.className = 'partner-card';
+                    card.innerHTML = `<img src="${partner.imageUrl}" alt="${partner.name} Logo"><h3>${partner.name}</h3>`;
+                    container.appendChild(card);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
